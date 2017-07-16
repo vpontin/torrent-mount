@@ -23,12 +23,9 @@ module.exports = function (source, mnt, isLazy) {
       engine.torrent.name = dir
     }
 
-    mnt = path.join(mnt, path.resolve('/', engine.torrent.name))
     fuse.unmount(mnt, function () {
-      mkdirp(mnt, function () {
-        fuse.mount(mnt, handlers)
-        engine.emit('mount', mnt)
-      })
+      fuse.mount(mnt, handlers)
+      engine.emit('mount', mnt)
     })
 
     if (!isLazy) {
@@ -64,8 +61,6 @@ module.exports = function (source, mnt, isLazy) {
     stat.ctime = ctime
     stat.mtime = mtime
     stat.atime = new Date()
-    stat.uid = process.getuid()
-    stat.gid = process.getgid()
 
     if (file) {
       stat.size = file.length

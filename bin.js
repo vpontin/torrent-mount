@@ -28,7 +28,7 @@ readTorrent(argv._[0], function (err, torrent, raw) {
     process.exit(2)
   }
 
-  var mnt = fs.realpathSync(argv.mount || '.')
+  var mnt = "T:\\"
   var isLazy = argv.lazy
   var engine = drive(raw, mnt, isLazy)
   var hs = 0
