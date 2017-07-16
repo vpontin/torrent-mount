@@ -16,7 +16,7 @@ var argv = minimist(process.argv.slice(2), {
 if (!argv._[0]) {
   console.error('Usage: torrent-mount torrent_or_magnet_link [directory]')
   console.error()
-  console.error('  --mount,  -m   Mount location path [directory]')
+  console.error('  --mount,  -m   Drive letter')
   console.error('  --lazy,   -l   Download files only if accessed')
   console.error()
   process.exit(1)
@@ -27,8 +27,13 @@ readTorrent(argv._[0], function (err, torrent, raw) {
     console.error(err.message)
     process.exit(2)
   }
-
-  var mnt = "T:\\"
+  
+  var mnt = ""
+  if (argv.mount) {
+    mnt = argv.mount + ":\\"
+  } else {
+    mnt = "T:\\"
+  }
   var isLazy = argv.lazy
   var engine = drive(raw, mnt, isLazy)
   var hs = 0
